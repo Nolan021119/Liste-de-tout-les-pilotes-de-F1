@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques des Pilotes de Formule 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Statistiques des Pilotes de Formule 1</h1>
+        <form id="searchForm">
+            <label for="searchInput">Rechercher un pilote :</label>
+            <input type="text" id="searchInput" placeholder="Entrez le nom du pilote">
+            <button type="button" onclick="searchDriver()">Rechercher</button>
+        </form>
+        <div id="searchResult"></div>
+    </header>
+    <main>
+        <table id="driversTable">
+            <tr>
+                <th>Nom</th>
+                <th>Pays</th>
+                <th>Nombre de Courses</th>
+                <th>Nombre de Victoires</th>
+                <th>Nombre de Podiums</th>
+                <th>Meilleure Position en Course</th>
+            </tr>
+            <!-- Les données des pilotes seront chargées ici -->
+        </table>
+    </main>
+
+    <script>
+        const driversData = [
+            { name: "Lewis Hamilton", country: "Royaume-Uni", races: 272, wins: 95, podiums: 170, bestPosition: 1 },
+            { name: "Michael Schumacher", country: "Allemagne", races: 306, wins: 91, podiums: 155, bestPosition: 1 },
+            { name: "Ayrton Senna", country: "Brésil", races: 161, wins: 41, podiums: 80, bestPosition: 1 },
+            { name: "Sebastian Vettel", country: "Allemagne", races: 267, wins: 53, podiums: 122, bestPosition: 1 },
+            { name: "Fernando Alonso", country: "Espagne", races: 323, wins: 32, podiums: 97, bestPosition: 1 },
+            // Ajoutez d'autres pilotes avec leurs statistiques
+        ];
+
+        function renderDriversTable() {
+            const table = document.getElementById("driversTable");
+            table.innerHTML = "<tr><th>Nom</th><th>Pays</th><th>Nombre de Courses</th><th>Nombre de Victoires</th><th>Nombre de Podiums</th><th>Meilleure Position en Course</th></tr>";
+
+            driversData.forEach(driver => {
+                const row = table.insertRow();
+                row.innerHTML = `<td>${driver.name}</td><td>${driver.country}</td><td>${driver.races}</td><td>${driver.wins}</td><td>${driver.podiums}</td><td>${driver.bestPosition}</td>`;
+            });
+        }
+
+        function searchDriver() {
+            const searchInput = document.getElementById("searchInput").value;
+            const resultDiv = document.getElementById("searchResult");
+            resultDiv.innerHTML = "";
+
+            const driver = driversData.find(driver => driver.name.toLowerCase() === searchInput.toLowerCase());
+            if (driver) {
+                resultDiv.innerHTML = `
+                    <h2>${driver.name}</h2>
+                    <p><strong>Pays:</strong> ${driver.country}</p>
+                    <p><strong>Nombre de Courses:</strong> ${driver.races}</p>
+                    <p><strong>Nombre de Victoires:</strong> ${driver.wins}</p>
+                    <p><strong>Nombre de Podiums:</strong> ${driver.podiums}</p>
+                    <p><strong>Meilleure Position en Course:</strong> ${driver.bestPosition}</p>
+                `;
+            } else {
+                resultDiv.innerHTML = `<p>Aucun pilote trouvé avec ce nom.</p>`;
+            }
+        }
+
+        // Initialisation de la table des pilotes
+        renderDriversTable();
+    </script>
+</body>
+</html>
